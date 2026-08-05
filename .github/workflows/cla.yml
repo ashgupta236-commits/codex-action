@@ -13,6 +13,17 @@ permissions:
 
 jobs:
   cla:
+    # Upstream-only. This gate exists to hold contributions to openai/codex-action
+    # against OpenAI's CLA. It was inherited with the fork, where it does not do
+    # that job: a PR here merges into this fork's own main and never reaches
+    # OpenAI, so the check blocks every PR waiting on a signature no upstream
+    # maintainer will ever read. Guarding on the repository makes it skip on forks
+    # and stay fully armed upstream — the same pattern used elsewhere in the estate
+    # for jobs that are only meaningful on the canonical repo.
+    #
+    # Deliberately NOT solved by signing: executing a CLA is a legally binding act
+    # and is not something automation may do on the account owner's behalf.
+    if: github.repository == 'openai/codex-action'
     runs-on: ubuntu-latest
     steps:
       - uses: contributor-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
