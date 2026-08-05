@@ -17,7 +17,7 @@ jobs:
           # /home/runner/work, but /home/runner has permissions 750.
           sudo usermod -a -G runner guest
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Change ownership
         run: |
